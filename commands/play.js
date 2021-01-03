@@ -1,6 +1,6 @@
 // Joins author's channel and plays music
 
-const ytdl = require('ytdl-core');
+const ytdl = require('ytdl-core-discord');
 const streamOptions = { seek: 0, volume: 1 };
 
 exports.run = async (client, msg, args) => {
@@ -26,12 +26,13 @@ exports.run = async (client, msg, args) => {
     // Join the author's channel
     let conn = await msg.member.voice.channel.join();
 
-    let dispatcher = await conn.play(ytdl(url, {filter: 'audioonly' } ));
+    let dispatcher = play(conn, url);
+    //let dispatcher = conn.play(await ytdl(url, {filter: 'opus' } ));
 
     msg.react('👍');
     msg.channel.send(`Now playing: ${info.videoDetails.title}`);
 }
-/*
+
 async function play(connection, url) {
   connection.play(await ytdl(url), { type: 'opus' });
-} */
+} 
